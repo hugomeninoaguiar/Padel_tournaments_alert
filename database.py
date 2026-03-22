@@ -1,8 +1,9 @@
 import hashlib
+import os
 import sqlite3
 from datetime import datetime
 
-DB_PATH = "tournaments.db"
+DB_PATH = os.environ.get("DB_PATH", "tournaments.db")
 
 
 def _make_id(name: str, date: str) -> str:
