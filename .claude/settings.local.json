@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -m venv .venv)",
+      "Bash(source /Users/hugomeninoaguiar/Agents/padel-tournaments-alert/.venv/bin/activate)",
+      "Bash(pip install:*)",
+      "Bash(playwright install:*)",
+      "Bash(source .venv/bin/activate)",
+      "Bash(python main.py)"
+    ]
+  }
+}
