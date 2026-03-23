@@ -49,6 +49,15 @@ def filter_new(tournaments: list[dict]) -> list[dict]:
     return new
 
 
+def get_all() -> list[dict]:
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.row_factory = sqlite3.Row
+        rows = conn.execute(
+            "SELECT name, date, location, first_seen FROM tournaments ORDER BY first_seen DESC"
+        ).fetchall()
+    return [dict(row) for row in rows]
+
+
 def add_tournaments(tournaments: list[dict]) -> None:
     now = datetime.utcnow().isoformat()
     with sqlite3.connect(DB_PATH) as conn:

@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
+import database
 from main import run_check
 
 load_dotenv()
@@ -46,6 +47,7 @@ Monitoring the Portuguese Padel Federation calendar for new tournaments.
 
 *Commands:*
 /help – show this message
+/status – show tournaments stored in the database
 """
 
 
@@ -53,10 +55,27 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     await update.message.reply_text(HELP_TEXT, parse_mode="MarkdownV2")
 
 
+async def status_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    tournaments = database.get_all()
+    count = len(tournaments)
+    if count == 0:
+        await update.message.reply_text("No tournaments in the database yet.")
+        return
+
+    lines = [f"*{count} tournaments stored:*\n"]
+    for t in tournaments[:10]:
+        lines.append(f"• {t['name']} — {t['date']}")
+    if count > 10:
+        lines.append(f"_...and {count - 10} more_")
+
+    await update.message.reply_text("\n".join(lines), parse_mode="Markdown")
+
+
 async def main() -> None:
     # Set up telegram bot for /help command
     app = ApplicationBuilder().token(BOT_TOKEN).build()
     app.add_handler(CommandHandler("help", help_command))
+    app.add_handler(CommandHandler("status", status_command))
 
     # Set up scheduler
     scheduler = AsyncIOScheduler(timezone=TIMEZONE)

@@ -10,4 +10,3 @@ sqlite3 tournaments.db "SELECT name, date, location FROM tournaments LIMIT 10;"
 # Second run — nothing new, no Telegram message sent
 python main.py
 
-test deploy rep
