@@ -56,6 +56,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
 
 async def status_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    database.init_db()
     tournaments = database.get_all()
     count = len(tournaments)
     if count == 0:
@@ -83,6 +84,7 @@ async def main() -> None:
     scheduler.add_job(run_check, CronTrigger(hour=16, minute=0, timezone=TIMEZONE))
 
     async with app:
+        await app.start()
         await app.updater.start_polling()
         scheduler.start()
         log.info("Scheduler started. Runs at 10:00 and 16:00 (%s).", TIMEZONE)
@@ -95,6 +97,7 @@ async def main() -> None:
         finally:
             scheduler.shutdown()
             await app.updater.stop()
+            await app.stop()
             log.info("Stopped.")
 
 
