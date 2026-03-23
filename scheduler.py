@@ -36,14 +36,14 @@ Monitoring the Portuguese Padel Federation calendar for new tournaments.
 – No news = no message (silence is good news)
 
 *What a notification looks like:*
-🆕 1 novo torneio encontrado\!
+🆕 1 novo torneio encontrado!
 
 🎾 *Tournament Name*
-💰 5\.000 ABS
-📅 25 Mar \- 29 Mar
+💰 5.000 ABS
+📅 25 Mar - 29 Mar
 📍 Venue Name
-🏷 Masculinos 1, Femininos 1, \.\.\.
-🔗 https://fpp\.tiepadel\.com/\.\.\.
+🏷 Masculinos 1, Femininos 1, ...
+🔗 https://fpp.tiepadel.com/...
 
 *Commands:*
 /help – show this message
@@ -52,7 +52,7 @@ Monitoring the Portuguese Padel Federation calendar for new tournaments.
 
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    await update.message.reply_text(HELP_TEXT, parse_mode="MarkdownV2")
+    await update.message.reply_text(HELP_TEXT, parse_mode="Markdown")
 
 
 async def status_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
