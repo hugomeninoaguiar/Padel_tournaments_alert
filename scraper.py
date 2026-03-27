@@ -88,10 +88,11 @@ async def _scrape_month(page, year: int, month: int) -> list[dict]:
 
     # Scrape tournament rows — inspect the table/card structure
     tournaments = []
-    rows = await page.locator("table tbody tr, .tournament-row, .calendar-item").all()
+    row_locator = page.locator("table tbody tr, .tournament-row, .calendar-item")
+    count = await row_locator.count()
 
-    for row in rows:
-        text = await row.inner_text()
+    for i in range(count):
+        row = row_locator.nth(i)
         cells = await row.locator("td").all()
 
         if not cells:
